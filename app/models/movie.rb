@@ -4,6 +4,9 @@ class Movie < ActiveRecord::Base
   end
   
   def self.with_ratings(ratings_list)
-    where(ratings: ratings_list)
+    if ratings_list.empty?
+      ratings_list = self.all_ratings
+    end
+    where(rating: ratings_list)
   end
 end
