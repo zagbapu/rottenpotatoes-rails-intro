@@ -3,10 +3,10 @@ class Movie < ActiveRecord::Base
     ['G','PG','PG-13','R']
   end
   
-  def self.with_ratings(ratings_list)
+  def self.with_ratings(ratings_list, sort_order)
     if ratings_list.empty?
       ratings_list = self.all_ratings
     end
-    where(rating: ratings_list)
+    where(rating: ratings_list).order(sort_order)
   end
 end

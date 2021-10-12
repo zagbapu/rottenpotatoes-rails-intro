@@ -1,7 +1,4 @@
 class MoviesController < ApplicationController
-  
-  
-
   def show
     id = params[:id] # retrieve movie ID from URI route
     @movie = Movie.find(id) # look up movie by unique ID
@@ -9,9 +6,16 @@ class MoviesController < ApplicationController
   end
 
   def index
-    @all_ratings = Movie.all_ratings 
+    @all_ratings = Movie.all_ratings
+    @sort = params[:sort]
+    case @sort
+      when 'title'
+      @title_header = "hilite"
+      when 'release_date'
+      @release_date_header = "hilite"
+    end
     @ratings_to_show = params[:ratings]&.keys || []
-    @movies = Movie.with_ratings(@ratings_to_show)
+    @movies = Movie.with_ratings(@ratings_to_show, @sort)
   end
 
   def new
